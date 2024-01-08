@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row m-2">
+    <h1 class="display-4">Welcome to Banana King 🍌</h1>
+        <h3>Available banana types</h3>
+
+        @foreach(var item in Model.bananas)
+        {
+            <div class="card" style="width:15em; margin:10px;">
+                <img src="@item.Img" class="card-img-top p-2" />
+                <div class="card-body text-center">
+                    <div class="card-title">
+                        <h3>@item.SortName</h3>
+                    </div>
+                    <div class="card-text">
+                        <p>@item.Description</p>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">Read more ...</a>
+                </div>
+            </div>
+        }
+</div>
