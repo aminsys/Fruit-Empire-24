@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Banana_King.Areas.Identity.Data;
 
-public class FruitEmpireAuth : IdentityDbContext<IdentityUser>
+public class FruitEmpireAuth : IdentityDbContext<RazorPagesBananaUser>
 {
     public FruitEmpireAuth(DbContextOptions<FruitEmpireAuth> options)
         : base(options)
