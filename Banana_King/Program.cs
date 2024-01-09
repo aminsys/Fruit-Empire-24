@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Banana_King.Areas.Identity.Data;
 using Banana_King.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+using QRCoder;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("FruitEmpireAuthConnection") ?? throw new InvalidOperationException("Connection string 'FruitEmpireAuthConnection' not found.");
 
@@ -13,6 +14,8 @@ builder.Services.AddDefaultIdentity<RazorPagesBananaUser>(options => options.Sig
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSenderService>();
+// Registered as a singleton service in the IoC container
+builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 
 var app = builder.Build();
 
