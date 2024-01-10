@@ -19,7 +19,18 @@
                     <div class="card-text">
                         <p>@item.Description</p>
                     </div>
-                    <a href="#" class="btn btn-primary btn-sm">Read more ...</a>
+                    <div class="row">
+                    <p class="text-secondary">Stock: @item.Inventory</p>
+                    @if (item.Inventory == 0)
+                    {
+                        <a href="#" class="btn btn-secondary btn-sm disabled">Order</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary btn-sm">Order</a>
+                    }
+                </div>
+                    
                 </div>
             </div>
         }

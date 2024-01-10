@@ -15,5 +15,7 @@ namespace Banana_King.Models
         public decimal? Price { get; set; }
 
         public string? Img { get; set; }
+
+        public int Inventory { get; set; } = 0;
     }
 }

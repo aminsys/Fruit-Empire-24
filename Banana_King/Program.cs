@@ -12,10 +12,15 @@ builder.Services.AddDbContext<FruitEmpireAuth>(options => options.UseSqlServer(c
 builder.Services.AddDefaultIdentity<RazorPagesBananaUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<FruitEmpireAuth>();
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+    options.Conventions.AuthorizePage("/BananaOperations", "Admin"));
 builder.Services.AddTransient<IEmailSender, EmailSenderService>();
 // Registered as a singleton service in the IoC container
 builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy("Admin", policy =>
+        policy.RequireAuthenticatedUser()
+            .RequireClaim("IsAdmin", bool.TrueString)));
 
 var app = builder.Build();
 

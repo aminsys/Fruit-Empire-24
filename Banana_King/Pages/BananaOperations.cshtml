@@ -4,35 +4,46 @@
 }
 
 <div class="row">
-    <form method="post" class="card p-3">
-        <div class="row">
-            <div asp-validation-summary="All"></div>
-        </div>
-        <div class="form-group mb-0 align-middle">
+    @if (Model.IsAdmin)
+    {
+        <form method="post" class="card p-3">
+            <div class="row">
+                <div asp-validation-summary="All"></div>
+            </div>
+            <div class="form-group mb-0 align-middle">
 
-            <label>Sort Name</label>
-            <input type="text" asp-for="NewBanana.SortName" class="mr-5"/>
+                <label>Sort Name</label>
+                <input type="text" asp-for="NewBanana.SortName" class="mr-5" />
 
-            <label>Short Description</label>
-            <input type="text" asp-for="NewBanana.Description" class="mr-5" />
+                <label>Short Description</label>
+                <input type="text" asp-for="NewBanana.Description" class="mr-5" />
 
-            <label>Price</label>
-            <input asp-for="NewBanana.Price" class="mr-5" />
+                <label>Price</label>
+                <input asp-for="NewBanana.Price" class="mr-5" />
 
-            <label>Image Url</label>
-            <input type="text" asp-for="NewBanana.Img" class="mr-5" />
+                <label>Image Url</label>
+                <input type="text" asp-for="NewBanana.Img" class="mr-5" />
 
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-    </form>
+                <label>Inventory</label>
+                <input type="text" asp-for="NewBanana.Inventory" class="mr-5" />
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    }
+    
 
     <table class="table mt-5">
         <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Description</th>
                 <th scope="col">Price</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Description</th>
+                <th scope="col">Inventory</th>
+                @if (Model.IsAdmin)
+                {
+                    <th scope="col">Delete</th>
+                }
             </tr>
         </thead>
         @foreach(var banana in Model.Bananas)
@@ -41,10 +52,14 @@
                 <td>@banana.SortName</td>
                 <td>@banana.Price</td>
                 <td>@banana.Description</td>
+                <td>@banana.Inventory</td>
                 <td>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@banana.Id">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
+                    @if (Model.IsAdmin)
+                    {
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@banana.Id">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }
