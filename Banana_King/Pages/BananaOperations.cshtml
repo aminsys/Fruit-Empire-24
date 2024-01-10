@@ -24,6 +24,9 @@
                 <label>Image Url</label>
                 <input type="text" asp-for="NewBanana.Img" class="mr-5" />
 
+                <label>Inventory</label>
+                <input type="text" asp-for="NewBanana.Inventory" class="mr-5" />
+
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
         </form>
@@ -34,8 +37,9 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Description</th>
                 <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col">Inventory</th>
                 @if (Model.IsAdmin)
                 {
                     <th scope="col">Delete</th>
@@ -48,6 +52,7 @@
                 <td>@banana.SortName</td>
                 <td>@banana.Price</td>
                 <td>@banana.Description</td>
+                <td>@banana.Inventory</td>
                 <td>
                     @if (Model.IsAdmin)
                     {
