@@ -3,7 +3,9 @@
 #nullable disable
 
 using System;
+using System.Configuration;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Banana_King.Areas.Identity.Data;
@@ -18,10 +20,13 @@ namespace Banana_King.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<RazorPagesBananaUser> _userManager;
+        private readonly IConfiguration _configuration; // Contains values from appsettings.json
 
-        public ConfirmEmailModel(UserManager<RazorPagesBananaUser> userManager)
+        public ConfirmEmailModel(UserManager<RazorPagesBananaUser> userManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -46,6 +51,14 @@ namespace Banana_King.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+
+            var adminEmail = _configuration["AdminEmail"] ?? string.Empty;
+            if (result.Succeeded)
+            {
+                var isAdmin = string.Compare(adminEmail, user.Email) == 0 ? true : false;
+                await _userManager.AddClaimAsync(user, new Claim("IsAdmin", isAdmin.ToString()));
+            }
+
             return Page();
         }
     }
